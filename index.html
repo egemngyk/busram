@@ -36,7 +36,7 @@
     function fadeIn(audio) {
       audio.volume = 0;
       audio.play();
-      $(audio).stop().animate({ volume: 1 }, 300);
+      $(audio).stop().animate({ volume: 0.7 }, 300); // %70 ses
     }
 
     function fadeOut(audio) {
@@ -51,11 +51,21 @@
       const audio2 = document.getElementById("audio2");
       const audio3 = document.getElementById("audio3");
 
+      $(document).click(function() {
+        audio1.play()
+      })
+
       let step3done = false;
       let step4done = false;
 
-      // Step 1 başlangıcı: music1.mp3
-      fadeIn(audio1);
+      // Kullanıcı ilk tıkladığında sesi aç
+      $(document).one("click", function () {
+        audio1.muted = false;
+        audio1.volume = 0;
+        $(audio1).stop().animate({ volume: 0.7 }, 300); // %70 ses
+      });
+
+      // Başlangıç ayarları
       $("#main_more").hide();
 
       $("#evet").click(function () {
@@ -68,7 +78,7 @@
 
       $("#main_more").click(function () {
         if (!step3done) {
-          // Step 3'e geçiş
+          // Step 3
           step3done = true;
           fadeOut(audio1);
           fadeIn(audio2);
@@ -78,7 +88,7 @@
           $("#main_text").html("ama size hala doğru düzgün çıkma teklifi bile edemedim");
           $("#main_more").html("<h4>özürümü kabul edin</h4>");
         } else if (!step4done) {
-          // Step 4'e geçiş
+          // Step 4
           step4done = true;
           fadeOut(audio2);
           fadeIn(audio3);
@@ -90,13 +100,6 @@
         }
       });
     });
-
-    // Konfeti animasyonu (senin orijinal kodun)
-    window.onload = function () {
-      // Tüm konfeti animasyonunu burada bıraktım (kodu değiştirmedim)
-      // (Aynı şekilde çalışacaktır)
-      // ...
-    };
   </script>
 </body>
 </html>
